@@ -1,13 +1,29 @@
-const { crearArchivo } = require("./helpers/multiplicar");
-const argv = require("./config/yargs");
+const { inquirerMenu, pausa, leerInput } = require("./helpers/inquirer");
+const { Tareas } = require("./models/tareas");
+
+require("colors");
 
 console.clear();
 
-console.log(argv);
+const main = async () => {
+  const tareas = new Tareas();
 
-const base = argv.b;
-const list = argv.l;
+  do {
+    opt = await inquirerMenu();
 
-crearArchivo(base, list)
-  .then((nombreArchivo) => console.log(nombreArchivo, "created Successfully!"))
-  .catch((err) => console.log(err));
+    switch (opt) {
+      case "1":
+        //crear opcion
+        const desc = await leerInput("Descripcion:");
+        tareas.crearTarea(desc);
+        break;
+      case "2":
+        console.log(tareas.listadoArray);
+        break;
+    }
+
+    await pausa();
+  } while (opt !== "0");
+};
+
+main();
