@@ -17,6 +17,13 @@ class Tareas {
     this._listado = {};
   }
 
+  borrarTarea(id = "") {
+    if (this._listado[id]) {
+      delete this._listado[id];
+      console.log("tarea eliminada");
+    }
+  }
+
   cargarTareas(tareas = []) {
     tareas.forEach((tarea) => {
       this._listado[tarea.id] = tarea;
@@ -31,14 +38,30 @@ class Tareas {
 
   listadoCompleto(tareas = []) {
     tareas.forEach((tarea) => {
-      let completedState = '';
-      if ( tarea.completadoEn != null ) {
-        completedState = 'Completada';
+      let completedState = "";
+      if (tarea.completadoEn != null) {
+        completedState = "Completada".green;
       } else {
-        completedState = 'pendiente';
-      };
-      console.log(`${tareas.indexOf(tarea) + 1}. ${tarea.desc} :: ${completedState}`);
-    })
+        completedState = "pendiente".red;
+      }
+      console.log(
+        `${tareas.indexOf(tarea) + 1}. ${tarea.desc} :: ${completedState}`
+      );
+    });
+  }
+
+  listadoPendientesCompletadas(completadas = true) {
+    this.listadoArray.forEach((tarea, i) => {
+      if (completadas) {
+        if (tarea.completadoEn != null) {
+          console.log(`${i + 1}. ${tarea.desc} :: ${"Completada".green}`);
+        }
+      } else {
+        if (tarea.completadoEn == null) {
+          console.log(`${i + 1} ${tarea.desc} :: ${"Pendiente".red}`);
+        }
+      }
+    });
   }
 }
 
