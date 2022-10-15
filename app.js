@@ -49,7 +49,7 @@ const main = async () => {
       case "5":
         //Completar
         const ids = await listChecklist(tareas.listadoArray);
-        console.log(ids);
+        tareas.toggleCompletadas(ids);
         break;
       case "6":
         const id = await listBorrar(tareas.listadoArray);
